@@ -1,0 +1,8 @@
+﻿  main.cpp
+D:\Projects\c-workspace\war_Caby\main.cpp(211,26): warning C4244: "argument": konwersja z "double" do "int", możliwa utrata danych
+D:\Projects\c-workspace\war_Caby\main.cpp(210,32): warning C4244: "argument": konwersja z "double" do "int", możliwa utrata danych
+D:\Projects\c-workspace\war_Caby\main.cpp(224,36): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
+D:\Projects\c-workspace\war_Caby\main.cpp(227,36): warning C4267: "argument": konwersja z "size_t" do "int", możliwa utrata danych
+D:\Projects\c-workspace\war_Caby\main.cpp(223,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Projects\c-workspace\war_Caby\main.cpp(226,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  szablon2vs19.vcxproj -> D:\Projects\c-workspace\war_Caby\x64\Debug\szablon2vs19.exe
