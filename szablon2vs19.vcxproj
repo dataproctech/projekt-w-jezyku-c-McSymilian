@@ -19,6 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameStateIO.h" />
+    <ClCompile Include="GameStateRead.c" />
+    <ClCompile Include="GameStateWrite.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="PawnsOnBoard.c" />
     <ClCompile Include="util.c" />
