@@ -1,7 +1,8 @@
 #pragma once
+typedef int** Board;
 
 int getBoardSize();
 
-int** getPawnsOnBoard();
+Board getPawnsOnBoard();
 
-void upadatePawnsOnBoard(int** updatedPawnsOnBoard);
+void upadatePawnsOnBoard(Board updatedPawnsOnBoard);
