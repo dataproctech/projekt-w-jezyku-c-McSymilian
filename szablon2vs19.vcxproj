@@ -20,9 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c" />
+    <ClCompile Include="util.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="cs8x8.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
