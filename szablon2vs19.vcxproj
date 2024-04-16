@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClCompile Include="main.c" />
     <ClCompile Include="PawnsOnBoard.c" />
-    <ClCompile Include="util.cpp" />
+    <ClCompile Include="util.c" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="cs8x8.bmp" />
