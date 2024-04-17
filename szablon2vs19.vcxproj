@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Board.c" />
+    <ClCompile Include="board\BoardController.c" />
     <ClCompile Include="GameResult.c" />
     <ClCompile Include="GameStateIO.h" />
     <ClCompile Include="GameStateRead.c">
