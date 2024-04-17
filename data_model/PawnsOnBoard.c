@@ -1,6 +1,6 @@
 #include "PawnsOnBoard.h"
 #include <stdlib.h>
-
+#include <stdbool.h>
 /*
 * PLAYER A: 
 *	PAWN: 1
@@ -17,22 +17,24 @@ int getBoardSize() {
 	return BOARD_SIZE;
 }
 
-void init(Board board) {
-	board = (Board)malloc(BOARD_SIZE * sizeof(int*));
-
+void init(Board* board) {
+	*board = (Board)malloc(BOARD_SIZE * sizeof(int*));
+	bool addPawn = false;
 	for (int i = 0; i < BOARD_SIZE; i++) {
-		board[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
+		(*board)[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
 		for (int j = 0; j < BOARD_SIZE; j++) {
-			if (i == 0 || i == 1) {
-				board[i][j] = 1;
+			if ((i == 0 || i == 1 || i == 2) && addPawn) {
+				(*board)[i][j] = 1;
 			}
-			else if (i == BOARD_SIZE - 1 || i == BOARD_SIZE - 2) {
-				board[i + 6][j] = -1;
+			else if ((i == 5 || i == 6 || i == 7) && addPawn) {
+				(*board)[i][j] = -1;
 			}
 			else {
-				board[i][j] = 0;
+				(*board)[i][j] = 0;
 			}
+			addPawn = addPawn ? false : true;
 		}
+		addPawn = addPawn ? false : true;
 	}
 }
 
@@ -59,7 +61,7 @@ Board copy(Board boardSource) {
 */
 Board getPawnsOnBoard() {
 	if (pawnsOnBoard == 0) {
-		init(pawnsOnBoard);
+		init(&pawnsOnBoard);
 
 	}
 

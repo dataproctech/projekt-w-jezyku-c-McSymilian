@@ -1,7 +1,5 @@
 #include "MainController.h"
 
-
-
 int czarny;
 int zielony;
 int czerwony;
@@ -14,15 +12,16 @@ void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, S
 	char text[128];
 	while (!quit) {
 		SDL_FillRect(screen, NULL, czarny);
+		DrawBoardAndPawns(screen);
 
-		// tekst informacyjny / info text
-		DrawRectangle(screen, 4, 4, SCREEN_WIDTH - 8, 36, czerwony, niebieski);
+		//// tekst informacyjny / info text
+		//DrawRectangle(screen, 4, 4, SCREEN_WIDTH - 8, 36, czerwony, niebieski);
 
-		sprintf_s(text, 128, "Szablon drugiego zadania");
-		DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text, charset);
+		//sprintf_s(text, 128, "Szablon drugiego zadania");
+		//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text, charset);
 
-		sprintf_s(text, 128, "Esc - wyjscie, \030 - przyspieszenie, \031 - zwolnienie");
-		DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text, charset);
+		//sprintf_s(text, 128, "Esc - wyjscie, \030 - przyspieszenie, \031 - zwolnienie");
+		//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text, charset);
 
 		SDL_UpdateTexture(scrtex, NULL, screen->pixels, screen->pitch);
 		//		SDL_RenderClear(renderer);
@@ -86,7 +85,7 @@ int windowInit(
 	SDL_RenderSetLogicalSize(*renderer, SCREEN_WIDTH, SCREEN_HEIGHT);
 	SDL_SetRenderDrawColor(*renderer, 0, 0, 0, 255);
 
-	SDL_SetWindowTitle(*window, "Szablon do zdania drugiego 2017");
+	SDL_SetWindowTitle(*window, "war_Caby");
 
 
 	*screen = SDL_CreateRGBSurface(0, SCREEN_WIDTH, SCREEN_HEIGHT, 32,
@@ -98,7 +97,7 @@ int windowInit(
 
 
 	// wy³¹czenie widocznoœci kursora myszy
-	SDL_ShowCursor(SDL_DISABLE);
+	//SDL_ShowCursor(SDL_DISABLE);
 
 	// wczytanie obrazka cs8x8.bmp
 	*charset = SDL_LoadBMP("./cs8x8.bmp");
