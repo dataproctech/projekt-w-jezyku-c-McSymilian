@@ -32,6 +32,7 @@
     <ClCompile Include="board\Pawns.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="data_model\PawnsOnBoard.c" />
+    <ClCompile Include="menu\Menu.c" />
     <ClCompile Include="utility\Util.c" />
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +46,7 @@
     <ClInclude Include="core\MainController.h" />
     <ClInclude Include="data_model\GameResult.h" />
     <ClInclude Include="data_model\PawnsOnBoard.h" />
+    <ClInclude Include="menu\Menu.h" />
     <ClInclude Include="utility\Util.h" />
     <ClInclude Include="window\WindowParameters.h" />
   </ItemGroup>
