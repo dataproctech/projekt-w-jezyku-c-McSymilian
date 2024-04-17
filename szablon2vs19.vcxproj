@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Board.c" />
     <ClCompile Include="GameResult.c" />
     <ClCompile Include="GameStateIO.h" />
     <ClCompile Include="GameStateRead.c">
@@ -34,6 +35,7 @@
     <Image Include="cs8x8.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Board.h" />
     <ClInclude Include="GameResult.h" />
     <ClInclude Include="PawnsOnBoard.h" />
     <ClInclude Include="Util.h" />
