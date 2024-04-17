@@ -19,29 +19,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="core\GameControll.c" />
-    <ClCompile Include="window\board\Board.c" />
-    <ClCompile Include="window\board\BoardController.c" />
-    <ClCompile Include="game_state\GameResult.c" />
-    <ClCompile Include="game_state\archive\GameStateIO.h" />
-    <ClCompile Include="game_state\archive\GameStateRead.c">
+    <ClCompile Include="board\Board.c" />
+    <ClCompile Include="board\BoardController.c" />
+    <ClCompile Include="GameResult.c" />
+    <ClCompile Include="GameStateIO.h" />
+    <ClCompile Include="GameStateRead.c">
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdc17</LanguageStandard_C>
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdc17</LanguageStandard_C>
     </ClCompile>
-    <ClCompile Include="game_state\archive\GameStateWrite.c" />
+    <ClCompile Include="GameStateWrite.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="game_state\PawnsOnBoard.c" />
-    <ClCompile Include="utility\Util.c" />
+    <ClCompile Include="PawnsOnBoard.c" />
+    <ClCompile Include="Util.c" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="cs8x8.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core\GameControll.h" />
-    <ClInclude Include="window\board\Board.h" />
-    <ClInclude Include="game_state\GameResult.h" />
-    <ClInclude Include="game_state\PawnsOnBoard.h" />
-    <ClInclude Include="utility\Util.h" />
+    <ClInclude Include="board\Board.h" />
+    <ClInclude Include="GameResult.h" />
+    <ClInclude Include="PawnsOnBoard.h" />
+    <ClInclude Include="Util.h" />
     <ClInclude Include="window\WindowParameters.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
