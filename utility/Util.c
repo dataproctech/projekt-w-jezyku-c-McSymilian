@@ -62,3 +62,20 @@ void DrawRectangle(SDL_Surface* screen, int x, int y, int l, int k,
 	for (i = y + 1; i < y + k - 1; i++)
 		DrawLine(screen, x + 1, i, l - 2, 1, 0, fillColor);
 };
+
+void DrawCircle(SDL_Surface* screen, int centerX, int centerY, int radius, int width, Uint32 outlineColor, Uint32 fillColor)
+{
+	int r = radius;
+	while (r--) {
+		int t = 0;
+		while (t < 360)
+		{
+			int x = r * cos(t * 3.14 / 180) + centerX;
+			int y = r * sin(t * 3.14 / 180) + centerY;
+			Uint32 color = r < radius - width ? fillColor : outlineColor;
+			DrawPixel(screen, x, y, color);
+			t++;
+		}
+	}
+
+}

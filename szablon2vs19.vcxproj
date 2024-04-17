@@ -29,6 +29,7 @@
       <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdc17</LanguageStandard_C>
     </ClCompile>
     <ClCompile Include="archive\GameStateWrite.c" />
+    <ClCompile Include="board\Pawns.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="data_model\PawnsOnBoard.c" />
     <ClCompile Include="utility\Util.c" />
@@ -38,6 +39,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board\Board.h" />
+    <ClInclude Include="board\BoardController.h" />
+    <ClInclude Include="board\BoardParameters.h" />
+    <ClInclude Include="board\Pawns.h" />
     <ClInclude Include="core\MainController.h" />
     <ClInclude Include="data_model\GameResult.h" />
     <ClInclude Include="data_model\PawnsOnBoard.h" />

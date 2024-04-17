@@ -1,7 +1,7 @@
 #pragma once
 #include "../utility/Util.h"
-#include "../window/WindowParameters.h"
-#define SQUARE_SIZE 50
+#include "BoardParameters.h"
+#include <stdbool.h>
 
 void DrawBoard(SDL_Surface* screen);
 
