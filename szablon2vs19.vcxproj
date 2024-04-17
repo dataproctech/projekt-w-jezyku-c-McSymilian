@@ -19,8 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="GameResult.c" />
     <ClCompile Include="GameStateIO.h" />
-    <ClCompile Include="GameStateRead.c" />
+    <ClCompile Include="GameStateRead.c">
+      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdc17</LanguageStandard_C>
+      <LanguageStandard_C Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdc17</LanguageStandard_C>
+    </ClCompile>
     <ClCompile Include="GameStateWrite.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="PawnsOnBoard.c" />
@@ -30,6 +34,7 @@
     <Image Include="cs8x8.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameResult.h" />
     <ClInclude Include="PawnsOnBoard.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>

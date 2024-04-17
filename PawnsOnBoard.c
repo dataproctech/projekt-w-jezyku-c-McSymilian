@@ -1,5 +1,5 @@
 #include "PawnsOnBoard.h"
-
+#include <stdlib.h>
 
 /*
 * PLAYER A: 
