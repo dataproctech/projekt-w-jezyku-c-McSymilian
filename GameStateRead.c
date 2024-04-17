@@ -13,7 +13,7 @@ int** readGameState(int size) {
 	for (int i = 0; i < size; i++) {
 		gameState[i] = (int*)malloc(size * sizeof(int));
 		for (int j = 0; j < size; j++) {
-			fscanf(file, "%d", &gameState[i][j]);
+			fscanf_s(file, "%d", &gameState[i][j]);
 		}
 	}
 	
