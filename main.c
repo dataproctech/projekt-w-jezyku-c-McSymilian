@@ -4,9 +4,8 @@
 #include<string.h>
 #include<stdbool.h>
 #include "Util.h"
+#include "window/WindowParameters.h"
 
-#define SCREEN_WIDTH	640
-#define SCREEN_HEIGHT	480
 
 int main(int argc, char **argv) {
 	int t1, t2, quit, frames, rc;
