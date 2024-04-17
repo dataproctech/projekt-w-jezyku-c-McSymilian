@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="board\Board.c" />
+    <ClCompile Include="board\BoardController.c" />
     <ClCompile Include="GameResult.c" />
     <ClCompile Include="GameStateIO.h" />
     <ClCompile Include="GameStateRead.c">
@@ -34,9 +36,11 @@
     <Image Include="cs8x8.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="board\Board.h" />
     <ClInclude Include="GameResult.h" />
     <ClInclude Include="PawnsOnBoard.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="window\WindowParameters.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

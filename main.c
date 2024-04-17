@@ -4,9 +4,8 @@
 #include<string.h>
 #include<stdbool.h>
 #include "Util.h"
+#include "window/WindowParameters.h"
 
-#define SCREEN_WIDTH	640
-#define SCREEN_HEIGHT	480
 
 int main(int argc, char **argv) {
 	int t1, t2, quit, frames, rc;
@@ -16,8 +15,6 @@ int main(int argc, char **argv) {
 	SDL_Texture *scrtex;
 	SDL_Window *window;
 	SDL_Renderer *renderer;
-	printf("wyjscie printfa trafia do tego okienka\n");
-	printf("printf output goes here\n");
 
 	if(SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		printf("SDL_Init error: %s\n", SDL_GetError());
