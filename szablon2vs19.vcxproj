@@ -37,6 +37,7 @@
     <ClInclude Include="GameResult.h" />
     <ClInclude Include="PawnsOnBoard.h" />
     <ClInclude Include="Util.h" />
+    <ClInclude Include="window\WindowParameters.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

@@ -2,5 +2,5 @@
 
 
 Authors:
- McSymilian - Maksymilian Ryder 160345
-  - Antoni Maćkowiak
+ - McSymilian - Maksymilian Ryder 160345
+ - etug13 - Antoni Maćkowiak
