@@ -1,4 +1,4 @@
-#include "board.h"
+#include "Board.h"
 
 #define DARK   0x261203
 #define BRIGHT 0xcfb29d
@@ -15,16 +15,17 @@ void DrawSquare(int color, int xStart, int yStart, int squareSize, SDL_Surface* 
 }
 
 void DrawBoard(SDL_Surface* screen) {
-	int color = 0;
-	int squareSize = 40;
-	int boardStartX = 10, boardStartY = 10;
 	int padding = 10;
-	DrawSquare(2, boardStartX, boardStartY, squareSize * 8 + padding * 2, screen);
-	DrawSquare(1, boardStartX + padding - 1, boardStartY + padding - 1, squareSize * 8 + 2, screen);
-	for (int x = boardStartX + padding; x < squareSize * 8 + boardStartX; x += squareSize) {
-		for (int y = boardStartY + padding; y < squareSize * 8 + boardStartY; y += squareSize) {
+	int boardStartX = (SCREEN_WIDTH - SQUARE_SIZE*8 - padding*2)/2;
+	int boardStartY = (SCREEN_HEIGHT - SQUARE_SIZE*8 - padding*2)/2;
+	DrawSquare(2, boardStartX, boardStartY, SQUARE_SIZE * 8 + padding * 2, screen);
+	DrawSquare(1, boardStartX + padding - 1, boardStartY + padding - 1, SQUARE_SIZE * 8 + 2, screen);
+
+	int color = 0;
+	for (int x = boardStartX + padding; x < SQUARE_SIZE * 8 + boardStartX; x += SQUARE_SIZE) {
+		for (int y = boardStartY + padding; y < SQUARE_SIZE * 8 + boardStartY; y += SQUARE_SIZE) {
 			if (color == 0) {
-				DrawSquare(color, x, y, squareSize, screen);
+				DrawSquare(color, x, y, SQUARE_SIZE, screen);
 			}
 			color += 1;
 			color %= 2;
