@@ -28,7 +28,7 @@
     <ClCompile Include="GameStateWrite.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="PawnsOnBoard.c" />
-    <ClCompile Include="util.c" />
+    <ClCompile Include="Util.c" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="cs8x8.bmp" />
@@ -36,7 +36,7 @@
   <ItemGroup>
     <ClInclude Include="GameResult.h" />
     <ClInclude Include="PawnsOnBoard.h" />
-    <ClInclude Include="util.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

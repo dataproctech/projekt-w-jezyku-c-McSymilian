@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdbool.h>
-#include "util.h"
+#include "Util.h"
 
 #define SCREEN_WIDTH	640
 #define SCREEN_HEIGHT	480
