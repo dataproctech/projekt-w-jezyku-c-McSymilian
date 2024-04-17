@@ -1,4 +1,4 @@
 #pragma once
-#include "util.h"
+#include "../Util.h"
 
 void DrawBoard(SDL_Surface* screen);
