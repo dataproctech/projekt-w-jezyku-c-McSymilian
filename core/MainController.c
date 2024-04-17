@@ -1,5 +1,7 @@
 #include "MainController.h"
 
+
+
 int czarny;
 int zielony;
 int czerwony;

@@ -3,7 +3,7 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdbool.h>
-#include "../utility/Util.h"
 #include "../window/WindowParameters.h"
+#include "../SDL2-2.0.10/include/SDL.h"
 
 void war_Caby_init_game();

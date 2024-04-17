@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="board\Board.c" />
     <ClCompile Include="board\BoardController.c" />
+    <ClCompile Include="core\MainController.c" />
     <ClCompile Include="data_model\GameResult.c" />
     <ClCompile Include="archive\GameStateIO.h" />
     <ClCompile Include="archive\GameStateRead.c">
@@ -37,9 +38,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board\Board.h" />
+    <ClInclude Include="core\MainController.h" />
     <ClInclude Include="data_model\GameResult.h" />
     <ClInclude Include="data_model\PawnsOnBoard.h" />
-    <ClInclude Include="main_controller\MainContoller.h" />
     <ClInclude Include="utility\Util.h" />
     <ClInclude Include="window\WindowParameters.h" />
   </ItemGroup>
