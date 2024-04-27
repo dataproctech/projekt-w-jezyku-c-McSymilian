@@ -4,4 +4,5 @@
 
 int main(int argc, char **argv) {
 	war_Caby_init_game();
+	return 0;
 };

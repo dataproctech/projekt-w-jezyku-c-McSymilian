@@ -9,9 +9,9 @@
 
 
 void NewGame();
-void ContinueGame();
 void SaveGame();
-void ExitGame();
+void ResumeGame();
+
 
 void DrawButton(SDL_Surface* screen, int startX, int startY, const char* label, SDL_Surface* charset) {
 	int stringStartX = startX + (BUTTON_WIDTH - strlen(label) * FONT) / 2;
@@ -23,9 +23,9 @@ void DrawButton(SDL_Surface* screen, int startX, int startY, const char* label, 
 void DrawMenu(SDL_Surface* screen, SDL_Surface* charset) {
 	DrawRectangle(screen, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, C2, C2);
 	int buttonStartX = (SCREEN_WIDTH - BUTTON_WIDTH) / 2;
-	int buttonStartY = (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2;
-	const char* buttonLabels[3] = { "NEW GAME", "CONTINUE GAME", "SAVE & EXIT"};
-	for (int i = 0; i < 3; i++) {
+	int buttonStartY = (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2;
+	const char* buttonLabels[4] = {	"CONTINUE GAME", "NEW GAME", "RESUME GAME", "SAVE & EXIT"};
+	for (int i = 0; i < 4; i++) {
 		DrawButton(screen, buttonStartX, buttonStartY, buttonLabels[i], charset);
 		buttonStartY += BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN;
 	}
@@ -35,23 +35,27 @@ int MenuClick(int x, int y)
 {
 	if (x > (SCREEN_WIDTH - BUTTON_WIDTH) / 2 && x < (SCREEN_WIDTH - BUTTON_WIDTH) / 2 + BUTTON_WIDTH)
 	{
-		if (y > (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 && y < (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + BUTTON_HEIGHT)
+		if (y > (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2 && y < (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2 + BUTTON_HEIGHT)
 		{
-			//NEW GAME
+			return 0;
+		}
+		else if (y > (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2 + BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2 + 2 * BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN)
+		{
 			NewGame();
 			return 0;
 		}
-		else if (y > (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 2 * BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN)
+		else if (y > (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2 + 2 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2 + 3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)
 		{
+			ResumeGame();
 			return 0;
 		}
-		else if (y > (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 2 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)
+		else if (y > (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2 + 3 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)) / 2 + 4 * BUTTON_HEIGHT + 3 * BUTTON_SPACE_BETWEEN)
 		{
-			//SAVE & EXIT
 			SaveGame();
 			return 1;
 		}
 	}
+	return 2;
 
 }
 
@@ -64,4 +68,13 @@ void SaveGame() {
 		getPawnsOnBoard(),
 		getBoardSize()
 	);
+}
+
+void ResumeGame() {
+	Board board = readGameState();
+	if (board != NULL) {
+		getPawnsOnBoard();
+		
+		upadatePawnsOnBoard(board);
+	}	
 }

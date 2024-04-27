@@ -2,7 +2,7 @@
 #include "Board.h"
 #include "Pawns.h"
 
-void* DrawBoardAndPawns(SDL_Surface* screen);
+void DrawBoardAndPawns(SDL_Surface* screen);
 
 void BoardClick(int x, int y);
 

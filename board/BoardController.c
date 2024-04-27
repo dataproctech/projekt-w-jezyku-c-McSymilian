@@ -2,7 +2,7 @@
 
 bool isGameFinished = false;
 bool currentPlayer = 1;
-void* DrawBoardAndPawns(SDL_Surface* screen) {
+void DrawBoardAndPawns(SDL_Surface* screen) {
 	DrawBoard(screen);
 	DrawPawns(screen, getPawnsOnBoard());
 }
