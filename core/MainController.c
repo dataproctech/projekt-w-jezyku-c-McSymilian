@@ -13,7 +13,7 @@ void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, S
 	while (!quit) {
 		SDL_FillRect(screen, NULL, czarny);
 		DrawBoardAndPawns(screen);
-
+		DrawMenu(screen, charset);
 		//// tekst informacyjny / info text
 		//DrawRectangle(screen, 4, 4, SCREEN_WIDTH - 8, 36, czerwony, niebieski);
 

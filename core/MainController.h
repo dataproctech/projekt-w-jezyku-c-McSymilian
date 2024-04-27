@@ -7,5 +7,6 @@
 #include "../SDL2-2.0.10/include/SDL.h"
 #include "../utility/Util.h"
 #include "../board/BoardController.h"
+#include "../menu/Menu.h"
 
 void war_Caby_init_game();

@@ -7,5 +7,5 @@
 #define BUTTON_WIDTH 300
 #define BUTTON_SPACE_BETWEEN 35
 
-void DrawMenu(SDL_Surface* screen);
+void DrawMenu(SDL_Surface* screen, SDL_Surface* charset);
  
