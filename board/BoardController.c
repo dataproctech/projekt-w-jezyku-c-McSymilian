@@ -7,7 +7,7 @@ void* DrawBoardAndPawns(SDL_Surface* screen) {
 	DrawPawns(screen, getPawnsOnBoard());
 }
 
-void ConsumeUserInput(int pointX, int pointY) {
+void BoardClick(int x, int y) {
 
 }
 

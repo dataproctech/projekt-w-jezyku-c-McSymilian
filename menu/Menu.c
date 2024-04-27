@@ -6,6 +6,12 @@
 #define C4 0x322C2B
 #define FONT 8
 
+
+void NewGame();
+void ContinueGame();
+void SaveGame();
+void ExitGame();
+
 void DrawButton(SDL_Surface* screen, int startX, int startY, const char* label, SDL_Surface* charset) {
 	int stringStartX = startX + (BUTTON_WIDTH - strlen(label) * FONT) / 2;
 	int stringStartY = startY + (BUTTON_HEIGHT - FONT) / 2;
@@ -22,4 +28,44 @@ void DrawMenu(SDL_Surface* screen, SDL_Surface* charset) {
 		DrawButton(screen, buttonStartX, buttonStartY, buttonLabels[i], charset);
 		buttonStartY += BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN;
 	}
+}
+
+void MenuClick(int x, int y)
+{
+	if (x > (SCREEN_WIDTH - BUTTON_WIDTH) / 2 && x < (SCREEN_WIDTH - BUTTON_WIDTH) / 2 + BUTTON_WIDTH)
+	{
+		if (y > (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 && y < (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + BUTTON_HEIGHT)
+		{
+			//NEW GAME
+			NewGame();
+		}
+		else if (y > (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 2 * BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN)
+		{
+			//CONTINUE GAME
+			ContinueGame();
+		}
+		else if (y > (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 2 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)
+		{
+			//SAVE & EXIT
+			SaveGame();
+			ExitGame();
+		}
+	}
+
+}
+
+void NewGame() {
+	//TODO
+}
+
+void ContinueGame() {
+	//TODO
+}
+
+void SaveGame() {
+	//TODO
+}
+
+void ExitGame() {
+	//TODO
 }

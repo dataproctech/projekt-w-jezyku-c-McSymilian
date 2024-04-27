@@ -4,8 +4,10 @@
 
 void* DrawBoardAndPawns(SDL_Surface* screen);
 
-void ConsumeUserInput(int pointX, int pointY);
+void BoardClick(int x, int y);
 
 bool IsGameFinished();
 
 int GetWinner();
+
+

@@ -10,18 +10,14 @@ void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, S
 
 	bool quit = 0;
 	char text[128];
+	bool isMenuTop = true;
 	while (!quit) {
 		SDL_FillRect(screen, NULL, czarny);
-		DrawBoardAndPawns(screen);
-		DrawMenu(screen, charset);
-		//// tekst informacyjny / info text
-		//DrawRectangle(screen, 4, 4, SCREEN_WIDTH - 8, 36, czerwony, niebieski);
 
-		//sprintf_s(text, 128, "Szablon drugiego zadania");
-		//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 10, text, charset);
-
-		//sprintf_s(text, 128, "Esc - wyjscie, \030 - przyspieszenie, \031 - zwolnienie");
-		//DrawString(screen, screen->w / 2 - strlen(text) * 8 / 2, 26, text, charset);
+		if (isMenuTop)
+			DrawMenu(screen, charset);
+		else
+			DrawBoardAndPawns(screen);
 
 		SDL_UpdateTexture(scrtex, NULL, screen->pixels, screen->pitch);
 		//		SDL_RenderClear(renderer);
@@ -31,9 +27,13 @@ void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, S
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE) quit = 1;;
+				if (event.key.keysym.sym == SDLK_ESCAPE) isMenuTop = !isMenuTop;;
 				break;
-			case SDL_KEYUP:
+			case SDL_MOUSEBUTTONDOWN:
+				int x, y;
+				SDL_GetMouseState(&x, &y);
+				if (isMenuTop) MenuClick(x, y);
+				else BoardClick(x, y);
 				break;
 			case SDL_QUIT:
 				quit = 1;
