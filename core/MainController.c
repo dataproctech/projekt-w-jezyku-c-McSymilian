@@ -32,7 +32,17 @@ void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, S
 			case SDL_MOUSEBUTTONDOWN:
 				int x, y;
 				SDL_GetMouseState(&x, &y);
-				if (isMenuTop) MenuClick(x, y);
+	
+				if (isMenuTop) {
+					int action = MenuClick(x, y);
+
+					if (action == 1) 
+						quit = 1;
+					
+					else if (action == 0) 
+						isMenuTop = false;
+					
+				}
 				else BoardClick(x, y);
 				break;
 			case SDL_QUIT:

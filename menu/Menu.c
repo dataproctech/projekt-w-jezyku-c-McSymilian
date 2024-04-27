@@ -1,5 +1,6 @@
 #include "Menu.h"
-
+#include "../data_model/PawnsOnBoard.h"
+#include "../archive/GameStateIO.h"
 #define C1 0xE4C59E
 #define C2 0xAF8260 
 #define C3 0x803D3B
@@ -30,7 +31,7 @@ void DrawMenu(SDL_Surface* screen, SDL_Surface* charset) {
 	}
 }
 
-void MenuClick(int x, int y)
+int MenuClick(int x, int y)
 {
 	if (x > (SCREEN_WIDTH - BUTTON_WIDTH) / 2 && x < (SCREEN_WIDTH - BUTTON_WIDTH) / 2 + BUTTON_WIDTH)
 	{
@@ -38,34 +39,29 @@ void MenuClick(int x, int y)
 		{
 			//NEW GAME
 			NewGame();
+			return 0;
 		}
 		else if (y > (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 2 * BUTTON_HEIGHT + BUTTON_SPACE_BETWEEN)
 		{
-			//CONTINUE GAME
-			ContinueGame();
+			return 0;
 		}
 		else if (y > (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 2 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN && y < (SCREEN_HEIGHT - (3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)) / 2 + 3 * BUTTON_HEIGHT + 2 * BUTTON_SPACE_BETWEEN)
 		{
 			//SAVE & EXIT
 			SaveGame();
-			ExitGame();
+			return 1;
 		}
 	}
 
 }
 
 void NewGame() {
-	//TODO
-}
-
-void ContinueGame() {
-	//TODO
+	resetPawns();
 }
 
 void SaveGame() {
-	//TODO
-}
-
-void ExitGame() {
-	//TODO
+	writeGameState(
+		getPawnsOnBoard(),
+		getBoardSize()
+	);
 }

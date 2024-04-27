@@ -1,6 +1,6 @@
 #include "GameStateIO.h"
-
-int** readGameState(int size) {
+#include "../data_model/PawnsOnBoard.h"
+Board readGameState(int size) {
 
 	FILE* file = fopen("gameState.txt", "r");
 	if (file == NULL) {
@@ -8,7 +8,7 @@ int** readGameState(int size) {
 		return NULL;
 	}
 
-	int** gameState = (int**)malloc(size * sizeof(int*));
+	Board gameState = (Board)malloc(size * sizeof(int*));
 
 	for (int i = 0; i < size; i++) {
 		gameState[i] = (int*)malloc(size * sizeof(int));

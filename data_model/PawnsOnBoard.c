@@ -10,14 +10,14 @@
 *	PAWN: -1
 *	SUPER_PAWN: -2
 */
-int** pawnsOnBoard;
+Board pawnsOnBoard;
 #define BOARD_SIZE 8
 
 int getBoardSize() {
 	return BOARD_SIZE;
 }
 
-void init(Board* board) {
+static void init(Board* board) {
 	*board = (Board)malloc(BOARD_SIZE * sizeof(int*));
 	bool addPawn = false;
 	for (int i = 0; i < BOARD_SIZE; i++) {
@@ -32,14 +32,14 @@ void init(Board* board) {
 			else {
 				(*board)[i][j] = 0;
 			}
-			addPawn = addPawn ? false : true;
+			addPawn = !addPawn;
 		}
-		addPawn = addPawn ? false : true;
+		addPawn = !addPawn;
 	}
 }
 
 
-Board copy(Board boardSource) {
+static Board copy(Board boardSource) {
 	Board copy = (Board)malloc(BOARD_SIZE * sizeof(int*)); 
 
 	for (int i = 0; i < BOARD_SIZE; i++) {
@@ -52,6 +52,29 @@ Board copy(Board boardSource) {
 	return copy;
 }
 
+void resetPawns() {
+	if (pawnsOnBoard == 0)
+		init(&pawnsOnBoard);
+	else {
+		bool addPawn = false;
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			for (int j = 0; j < BOARD_SIZE; j++) {
+				if ((i == 0 || i == 1 || i == 2) && addPawn) {
+					pawnsOnBoard[i][j] = 1;
+				}
+				else if ((i == 5 || i == 6 || i == 7) && addPawn) {
+					pawnsOnBoard[i][j] = -1;
+				}
+				else {
+					pawnsOnBoard[i][j] = 0;
+				}
+				addPawn = !addPawn;
+			}
+			addPawn = !addPawn;
+		}
+	}
+}
+
 /*
 * If board is not initialized, it initializes it
 * 
@@ -60,10 +83,9 @@ Board copy(Board boardSource) {
 * 
 */
 Board getPawnsOnBoard() {
-	if (pawnsOnBoard == 0) {
+	if (pawnsOnBoard == 0) 
 		init(&pawnsOnBoard);
-
-	}
+	
 
 	return copy(pawnsOnBoard);
 }

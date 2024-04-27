@@ -6,3 +6,5 @@ int getBoardSize();
 Board getPawnsOnBoard();
 
 void upadatePawnsOnBoard(Board updatedPawnsOnBoard);
+
+void resetPawns();
