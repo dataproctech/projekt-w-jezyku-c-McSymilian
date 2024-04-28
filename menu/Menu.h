@@ -8,4 +8,5 @@
 #define BUTTON_SPACE_BETWEEN 35
 
 void DrawMenu(SDL_Surface* screen, SDL_Surface* charset);
+void DrawMenuButtons(SDL_Surface* screen, SDL_Surface* charset);
 int MenuClick(int x, int y);
