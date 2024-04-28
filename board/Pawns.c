@@ -13,10 +13,8 @@
 #define QUEEN_BLACK_BORDER 0x333333
 
 void DrawPawns(SDL_Surface* screen, Board pawnsOnBoard) {
-	bool drawPawn = false;
 	for (int i = 0; i < getBoardSize(); i++) {
 		for (int j = 0; j < getBoardSize(); j++) {
-			if (drawPawn) {
 				int pawn = pawnsOnBoard[i][j];
 				if (pawn != 0) {
 					Uint32 pawnColor;
@@ -53,9 +51,7 @@ void DrawPawns(SDL_Surface* screen, Board pawnsOnBoard) {
 						pawnBorderColor
 					);
 				}				
-			}
-			drawPawn = !drawPawn;
+			
 		}
-		drawPawn = !drawPawn;
 	}
 }
