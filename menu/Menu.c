@@ -44,6 +44,14 @@ void DrawMenuButtons(SDL_Surface* screen, SDL_Surface* charset)
 	}
 }
 
+/*
+* MenuClick - button click event handling
+* 
+* @param x - mouse x coordinate of the click
+* @param y - mouse y coordinate of the click
+* 
+* @return 0 - if the menu should hide, 1 - if the game should be saved and exited, 2 - if nothing should happen
+*/
 int MenuClick(int x, int y)
 {
 	if (x > (SCREEN_WIDTH - BUTTON_WIDTH) / 2 && x < (SCREEN_WIDTH - BUTTON_WIDTH) / 2 + BUTTON_WIDTH)
