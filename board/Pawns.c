@@ -19,7 +19,7 @@ void DrawPawns(SDL_Surface* screen, Board pawnsOnBoard) {
 				if (pawn != 0) {
 					Uint32 pawnColor;
 					Uint32 pawnBorderColor;
-					int radius = 10;
+					int radius = 6;
 					switch (pawn) {
 					case 1:
 						 pawnColor = WHITE;
@@ -28,24 +28,26 @@ void DrawPawns(SDL_Surface* screen, Board pawnsOnBoard) {
 					case 2:
 						pawnColor = QUEEN_WHITE;
 						pawnBorderColor = QUEEN_WHITE_BORDER;
-						radius = 15;
+						radius = 10;
 						break;
 					case -2:
 						pawnColor = QUEEN_BLACK;
 						pawnBorderColor = QUEEN_BLACK_BORDER;
-						radius = 15;
+						radius = 10;
 						break;
 					case -1:
 						 pawnColor = BLACK;
 						 pawnBorderColor = BLACK_BORDER;
 						 break;
+					default:
+						continue;
 					}
 					
 					DrawCircle(
 						screen,
 						BOARD_START_X + PADDING + i * SQUARE_SIZE + SQUARE_SIZE / 2,
 						BOARD_START_Y + PADDING + j * SQUARE_SIZE + SQUARE_SIZE / 2,
-						SQUARE_SIZE / 2,
+						SQUARE_SIZE / 2 - 6,
 						radius,
 						pawnColor,
 						pawnBorderColor
