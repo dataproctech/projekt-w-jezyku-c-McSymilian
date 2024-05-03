@@ -2,6 +2,7 @@
 #include "Pawns.h"
 #include "BoardParameters.h"
 #include <stdbool.h>
+#include "../utility/Util.h"
 
 #define DARK   0x261203
 #define DARK_BORDER   0xcfb29d
@@ -63,11 +64,10 @@ static void DrawSquare(int xStart, int yStart, int squareSize, SDL_Surface* scre
 	DrawRectangle(screen, xStart, yStart, squareSize, squareSize, borderColor, bgColor);
 }
 
-typedef struct Coordinates {
+struct Coordinates_s {
 	int x;
 	int y;
-} Coordinates;
-
+} Coordinates_default = { -1, -1 };
 
 
 Coordinates selected = { .x = -1, .y = -1 };
@@ -92,7 +92,7 @@ void addDestination(int x, int y) {
 	destinations[destinationCount].y = y;
 }
 
-static void clearDestination() {
+void clearDestination() {
 	while(destinationCount >= 0) {
 		destinations[destinationCount].x = -1;
 		destinations[destinationCount].y = -1;
@@ -134,6 +134,9 @@ void setHovered(int x, int y) {
 	hovered.x = x;
 	hovered.y = y;
 }
+void setDefaultHovered() {
+	hovered = Coordinates_default;
+}
 void clearHovered() {
 	hovered.x = -1;
 	hovered.y = -1;
@@ -158,7 +161,7 @@ void DrawBoard(SDL_Surface* screen) {
 	if (correctedX >= 0 && correctedY >= 0)
 		setHovered(correctedX / SQUARE_SIZE, correctedY / SQUARE_SIZE);
 	else
-		setHovered(-1, -1);
+		setDefaultHovered();
 
 	for (int x = 0; x < 8; x++) {
 		int xStart = BOARD_START_X + PADDING + x * SQUARE_SIZE;

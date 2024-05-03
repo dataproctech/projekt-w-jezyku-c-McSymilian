@@ -1,5 +1,5 @@
 #pragma once
-#include "../utility/Util.h"
+#include "../SDL2-2.0.10/include/SDL_surface.h"
 
 void DrawBoard(SDL_Surface* screen);
 
@@ -11,3 +11,9 @@ void clearHovered();
 void setHovered(int x, int y);
 void clearSelected();
 void setSelected(int x, int y);
+
+
+typedef struct Coordinates_s Coordinates;
+
+
+

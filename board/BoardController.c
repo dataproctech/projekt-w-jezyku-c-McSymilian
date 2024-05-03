@@ -1,15 +1,18 @@
 #include "BoardController.h"
+#include "MoveController.h"
 #include "Board.h"
 #include "Pawns.h"
+#include <math.h>
+#include <stdbool.h>
 
 bool isGameFinished = false;
 
 /*
- White player is 1, black player is -1.
+ White player is true, black player is false.
 White player starts the game.
-TODO: Implement read write from file
+TODO: Implement read write player from file
 */
-bool currentPlayer = 1;
+bool currentPlayerIndicator = true;
 void DrawBoardAndPawns(SDL_Surface* screen) {
 	DrawBoard(screen);
 	DrawPawns(screen, getPawnsOnBoard());
@@ -30,10 +33,23 @@ static int getRow(int y) {
 	return (y - BOARD_START_Y - PADDING) / SQUARE_SIZE;
 }
 
-typedef struct Pawn {
+typedef struct Cooordinates {
 	int row;
 	int column;
-} Pawn;
+} Cooordinates;
+
+static Board board;
+
+static Pawn getPawn(Cooordinates coordinates, Board board) {
+	int val = board[coordinates.column][coordinates.row];
+	return (Pawn) { 
+		.row = coordinates.row,
+		.column = coordinates.column,
+		.isWhite = val > 0,
+		.isKing =  abs(val) == 2,
+		.isDestination = val == 0
+	};
+}
 
 /*
 * BoardClick - board click event handling
@@ -43,28 +59,51 @@ typedef struct Pawn {
 *
 *
 */
-
-static Board board;
 void BoardClick(int x, int y) {
 	if (IsGameFinished()) 
 		return;
+
 	if (board == NULL) 
 		board = getPawnsOnBoard();
 	
-	Pawn selectedPawn = (Pawn){ .row = getRow(y), .column = getColumn(x) };
+	Cooordinates selectedCoords = (Cooordinates){ .row = getRow(y), .column = getColumn(x) };
 
-	if (selectedPawn.row == -1 || selectedPawn.column == -1) 
+	if (selectedCoords.row == -1 || selectedCoords.column == -1) 
 		return;
 	
-	int a = board[selectedPawn.column][selectedPawn.row];
-	a = a;
-	if (currentPlayer == 1 && a > 0) {
-		setSelected(selectedPawn.column, selectedPawn.row);
+	Pawn selectedField = getPawn(selectedCoords, board);
+
+	//palyer A
+	if (currentPlayerIndicator && selectedField.isWhite && !selectedField.isDestination) {
+		setSelectedPawn(&selectedField, board);	
 	}
-	else if (currentPlayer == -1 && getPawnsOnBoard()[selectedPawn.row][selectedPawn.column] < 0) {
+	//Player B
+	else if (!currentPlayerIndicator && !selectedField.isWhite && !selectedField.isDestination) {
+		setSelectedPawn(&selectedField, board);
 	}
-	else {
-		return;
+	//empty square
+	else if (selectedField.isDestination && getSelectedPawn().column != -1) {
+		int moveParseResult = parseMove(selectedField, board);
+		if (moveParseResult == 0) {
+			Pawn pawn = getSelectedPawn();
+			board = MovePawn(&pawn, &selectedField, board);
+			upadatePawnsOnBoard(board);
+
+			setSelectedPawn(&selectedField, board);
+			EndMove();
+			currentPlayerIndicator  = !currentPlayerIndicator;
+		}
+		else if (moveParseResult == 1) {
+			//board = MovePawn(getSelectedPawn(), &pawn, board);
+
+			//upadatePawnsOnBoard(board);
+
+			////setSelectedPawn(defaultPawn(), board);
+			//if (!hasKnockDown(pawn, board)) {
+			//	currentPlayer = -1;
+			//	setSelectedPawn(*defaultPawn(), board);
+			//}
+		}
 	}
 		
 
@@ -90,5 +129,5 @@ bool IsGameFinished() {
 */
 int GetWinner() {
 	
-	return IsGameFinished() ? currentPlayer : 0;
+	return IsGameFinished() ? currentPlayerIndicator : 0;
 }
