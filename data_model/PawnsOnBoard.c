@@ -1,6 +1,12 @@
 #include "PawnsOnBoard.h"
 #include <stdlib.h>
 #include <stdbool.h>
+
+
+struct GameState {
+	Board pawnsOnBoard;
+	bool currentPlayer;
+};
 /*
 * PLAYER A: 
 *	PAWN: 1
@@ -10,27 +16,28 @@
 *	PAWN: -1
 *	SUPER_PAWN: -2
 */
-Board pawnsOnBoard;
+GameState gameState;
 #define BOARD_SIZE 8
 
 int getBoardSize() {
 	return BOARD_SIZE;
 }
 
-static void init(Board* board) {
-	*board = (Board)malloc(BOARD_SIZE * sizeof(int*));
+static void init(GameState* gameState) {
+	gameState->currentPlayer = true;
+	gameState->pawnsOnBoard = (Board)malloc(BOARD_SIZE * sizeof(int*));
 	bool addPawn = false;
 	for (int i = 0; i < BOARD_SIZE; i++) {
-		(*board)[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
+		(gameState->pawnsOnBoard)[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			if ((i == 0 || i == 1 || i == 2) && addPawn) {
-				(*board)[i][j] = 1;
+				(gameState->pawnsOnBoard)[i][j] = 1;
 			}
 			else if ((i == 5 || i == 6 || i == 7) && addPawn) {
-				(*board)[i][j] = -1;
+				(gameState->pawnsOnBoard)[i][j] = -1;
 			}
 			else {
-				(*board)[i][j] = 0;
+				(gameState->pawnsOnBoard)[i][j] = 0;
 			}
 			addPawn = !addPawn;
 		}
@@ -53,20 +60,20 @@ static Board copy(Board boardSource) {
 }
 
 void resetPawns() {
-	if (pawnsOnBoard == 0)
-		init(&pawnsOnBoard);
+	if (gameState.pawnsOnBoard == 0)
+		init(&gameState.pawnsOnBoard);
 	else {
 		bool addPawn = false;
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			for (int j = 0; j < BOARD_SIZE; j++) {
 				if ((i == 0 || i == 1 || i == 2) && addPawn) {
-					pawnsOnBoard[i][j] = 1;
+					gameState.pawnsOnBoard[i][j] = 1;
 				}
 				else if ((i == 5 || i == 6 || i == 7) && addPawn) {
-					pawnsOnBoard[i][j] = -1;
+					gameState.pawnsOnBoard[i][j] = -1;
 				}
 				else {
-					pawnsOnBoard[i][j] = 0;
+					gameState.pawnsOnBoard[i][j] = 0;
 				}
 				addPawn = !addPawn;
 			}
@@ -83,11 +90,15 @@ void resetPawns() {
 * 
 */
 Board getPawnsOnBoard() {
-	if (pawnsOnBoard == 0) 
-		init(&pawnsOnBoard);
+	if (gameState.pawnsOnBoard == 0)
+		init(&gameState);
 	
 
-	return copy(pawnsOnBoard);
+	return copy(gameState.pawnsOnBoard);
+}
+
+bool getCurrentPlayer() {
+	return gameState.currentPlayer;
 }
 
 /*
@@ -98,7 +109,7 @@ Board getPawnsOnBoard() {
 void upadatePawnsOnBoard(Board updatedPawnsOnBoard) {
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		for (int j = 0; j < BOARD_SIZE; j++) {
-			pawnsOnBoard[i][j] = updatedPawnsOnBoard[i][j];
+			gameState.pawnsOnBoard[i][j] = updatedPawnsOnBoard[i][j];
 		}
 	}
 }

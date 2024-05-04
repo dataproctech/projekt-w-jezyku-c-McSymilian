@@ -87,15 +87,17 @@ void NewGame() {
 void SaveGame() {
 	writeGameState(
 		getPawnsOnBoard(),
-		getBoardSize()
+		getBoardSize(),
+		getCurrentPlayer()
 	);
 }
 
 void ResumeGame() {
-	Board board = readGameState();
-	if (board != NULL) {
+
+	GameState gameState = readGameState();
+	if (gameState.pawnsOnBoard != NULL) {
 		getPawnsOnBoard();
 		
-		upadatePawnsOnBoard(board);
+		upadatePawnsOnBoard(gameState.pawnsOnBoard);
 	}	
 }

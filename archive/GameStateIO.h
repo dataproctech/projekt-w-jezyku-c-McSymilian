@@ -1,7 +1,11 @@
 #pragma once
 #include <stdio.h>
 #include <stdlib.h>
+#include<stdbool.h>
+#include "../data_model/PawnsOnBoard.h"
 
-int writeGameState(int** gameState, int size);
+typedef int** Board;
 
-int** readGameState();
+int writeGameState(int** gameState, int size, bool currentPlayer);
+
+GameState readGameState();
