@@ -4,8 +4,7 @@
 #include<stdbool.h>
 #include "../data_model/PawnsOnBoard.h"
 
-typedef int** Board;
 
-int writeGameState(int** gameState, int size, bool currentPlayer);
+int writeGameState(GameState gameState, int size);
 
 GameState readGameState();
