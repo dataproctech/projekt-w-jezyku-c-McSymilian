@@ -9,7 +9,6 @@ bool isGameFinished = false;
 /*
  White player is true, black player is false.
 White player starts the game.
-TODO: Implement read write player from file
 */
 bool currentPlayerIndicator = true;
 void DrawBoardAndPawns(SDL_Surface* screen) {
@@ -128,4 +127,12 @@ bool IsGameFinished() {
 */
 int GetWinner() {	
 	return IsGameFinished() ? currentPlayerIndicator : -1;
+}
+
+bool  getControllCurrentPlayer() {
+	return currentPlayerIndicator;
+}
+
+void setCurrentPlayer(bool currentPlayer) {
+	currentPlayerIndicator = currentPlayer;
 }

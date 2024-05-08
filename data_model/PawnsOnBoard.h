@@ -2,10 +2,12 @@
 #include <stdbool.h>
 typedef int** Board;
 
-typedef struct {
+struct GameState_s {
 	Board pawnsOnBoard;
 	bool currentPlayer;
-} GameState;
+};
+
+typedef struct GameState_s GameState;
 
 int getBoardSize();
 

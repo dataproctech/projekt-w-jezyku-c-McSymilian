@@ -2,7 +2,7 @@
 #include "../data_model/PawnsOnBoard.h"
 
 GameState readGameState() {
-	GameState gameState;
+	extern GameState gameState;
 	FILE* file = fopen("gameState.txt", "r");
 	if (file == NULL) {
 		printf("Error while opening file\n");
@@ -14,11 +14,13 @@ GameState readGameState() {
 
 	gameState.pawnsOnBoard = (Board)malloc(getBoardSize() * sizeof(int*));
 
-	fscanf_s(file, "%d\n", &gameState.currentPlayer);
+	int playerInput;
+	fscanf_s(file, "%d\n", &playerInput);
+	gameState.currentPlayer = playerInput == 1;
 	for (int i = 0; i < getBoardSize(); i++) {
 		gameState.pawnsOnBoard[i] = (int*)malloc(getBoardSize() * sizeof(int));
 		for (int j = 0; j < getBoardSize(); j++) 
-			fscanf_s(file, "%d", &gameState.pawnsOnBoard[i][j]);
+			fscanf_s(file, "%d", &(gameState.pawnsOnBoard[i][j]));
 	}
 
 	fclose(file);

@@ -7,7 +7,7 @@ int czarny;
 //int czerwony;
 //int niebieski;
 
-void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, SDL_Renderer* renderer) {
+static void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, SDL_Renderer* renderer) {
 	SDL_Event event;
 
 	bool quit = 0;
@@ -55,7 +55,7 @@ void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, S
 	};
 }
 
-int closeGame(
+static int closeGame(
 	SDL_Surface* screen,
 	SDL_Surface* charset,
 	SDL_Texture* scrtex,
@@ -73,7 +73,7 @@ int closeGame(
 	return 0;
 }
 
-int windowInit(
+static int windowInit(
 	SDL_Surface** screen,
 	SDL_Surface** charset,
 	SDL_Texture** scrtex,
@@ -151,3 +151,4 @@ void war_Caby_init_game() {
 
 	closeGame(screen, charset, scrtex, window, renderer);
 }
+

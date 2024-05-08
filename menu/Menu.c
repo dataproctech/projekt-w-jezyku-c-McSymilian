@@ -1,7 +1,10 @@
 #include "Menu.h"
 #include "../data_model/PawnsOnBoard.h"
 #include "../archive/GameStateIO.h"
+#include "../SDL2-2.0.10/include/SDL_mouse.h"
+#include "../core/MainController.h"
 #include <stdbool.h>
+#include <string.h>
 
 #define C1 0xE4C59E
 #define C2 0xAF8260 
@@ -18,7 +21,7 @@ void SaveGame();
 void ResumeGame();
 
 
-void DrawButton(SDL_Surface* screen, int startX, int startY, const char* label, SDL_Surface* charset, bool selected) {
+static void DrawButton(SDL_Surface* screen, int startX, int startY, const char* label, SDL_Surface* charset, bool selected) {
 	int stringStartX = startX + (BUTTON_WIDTH - strlen(label) * FONT) / 2;
 	int stringStartY = startY + (BUTTON_HEIGHT - FONT) / 2;
 	DrawRectangle(screen, startX, startY, BUTTON_WIDTH, BUTTON_HEIGHT, selected ? BUTTON_OUTLINECOLOR_HOVER : C3, selected ? BUTTON_BGCOLOR_HOVER : C1);
@@ -86,9 +89,11 @@ void NewGame() {
 
 void SaveGame() {
 	writeGameState(
-		getPawnsOnBoard(),
-		getBoardSize(),
-		getCurrentPlayer()
+		(GameState) {
+			.pawnsOnBoard = getPawnsOnBoard(),
+			.currentPlayer = getCurrentPlayer()
+		},
+		getBoardSize()
 	);
 }
 
