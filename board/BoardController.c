@@ -1,6 +1,7 @@
 #include "BoardController.h"
 
 bool isGameFinished = false;
+/*1-white 0-black*/
 bool currentPlayer = 1;
 void DrawBoardAndPawns(SDL_Surface* screen) {
 	DrawBoard(screen);
@@ -45,6 +46,6 @@ bool IsGameFinished() {
 * @return 1 if the white player wins, -1 if the black player wins, 0 if the game is not finished.
 */
 int GetWinner() {
-	
+
 	return IsGameFinished() ? currentPlayer : 0;
 }

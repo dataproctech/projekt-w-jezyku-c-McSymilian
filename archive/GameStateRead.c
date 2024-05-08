@@ -1,21 +1,24 @@
 #include "GameStateIO.h"
 #include "../data_model/PawnsOnBoard.h"
 
-Board readGameState() {
-
+GameState readGameState() {
+	GameState gameState;
 	FILE* file = fopen("gameState.txt", "r");
 	if (file == NULL) {
 		printf("Error while opening file\n");
-		return NULL;
+		gameState.pawnsOnBoard = NULL;
+		gameState.currentPlayer = true;
+		fclose(file);
+		return gameState;
 	}
 
-	Board gameState = (Board)malloc(getBoardSize() * sizeof(int*));
+	gameState.pawnsOnBoard = (Board)malloc(getBoardSize() * sizeof(int*));
 
+	fscanf_s(file, "%d\n", &gameState.currentPlayer);
 	for (int i = 0; i < getBoardSize(); i++) {
-		gameState[i] = (int*)malloc(getBoardSize() * sizeof(int));
+		gameState.pawnsOnBoard[i] = (int*)malloc(getBoardSize() * sizeof(int));
 		for (int j = 0; j < getBoardSize(); j++) 
-			fscanf_s(file, "%d", &gameState[i][j]);
-		
+			fscanf_s(file, "%d", &gameState.pawnsOnBoard[i][j]);
 	}
 
 	fclose(file);
