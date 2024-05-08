@@ -6,7 +6,6 @@
 #include <stdbool.h>
 
 bool isGameFinished = false;
-
 /*
  White player is true, black player is false.
 White player starts the game.
@@ -127,7 +126,6 @@ bool IsGameFinished() {
 * 
 * @return 1 if the white player wins, -1 if the black player wins, 0 if the game is not finished.
 */
-int GetWinner() {
-	
-	return IsGameFinished() ? currentPlayerIndicator : 0;
+int GetWinner() {	
+	return IsGameFinished() ? currentPlayerIndicator : -1;
 }
