@@ -33,9 +33,11 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="data_model\PawnsOnBoard.c" />
     <ClCompile Include="menu\Menu.c" />
+    <ClCompile Include="board\MoveController.c" />
     <ClCompile Include="utility\Util.c" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\OneDrive\Pulpit\war_Caby.png" />
     <Image Include="cs8x8.bmp" />
   </ItemGroup>
   <ItemGroup>
@@ -47,6 +49,7 @@
     <ClInclude Include="data_model\GameResult.h" />
     <ClInclude Include="data_model\PawnsOnBoard.h" />
     <ClInclude Include="menu\Menu.h" />
+    <ClInclude Include="board\MoveController.h" />
     <ClInclude Include="utility\Util.h" />
     <ClInclude Include="window\WindowParameters.h" />
   </ItemGroup>

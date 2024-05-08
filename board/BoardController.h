@@ -1,6 +1,6 @@
 #pragma once
-#include "Board.h"
-#include "Pawns.h"
+#include <stdbool.h>
+#include "../SDL2-2.0.10/include/SDL_surface.h"
 
 void DrawBoardAndPawns(SDL_Surface* screen);
 

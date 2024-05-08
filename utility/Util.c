@@ -1,4 +1,5 @@
 #include "Util.h"
+#include <math.h>
 // narysowanie napisu txt na powierzchni screen, zaczynaj¹c od punktu (x, y)
 // charset to bitmapa 128x128 zawieraj¹ca znaki
 // draw a text txt on surface screen, starting from the point (x, y)
@@ -67,11 +68,11 @@ void DrawCircle(SDL_Surface* screen, int centerX, int centerY, int radius, int w
 {
 	int r = radius;
 	while (r--) {
-		int t = 0;
+		double t = 0;
 		while (t < 360)
 		{
-			int x = r * cos(t * 3.14 / 180) + centerX;
-			int y = r * sin(t * 3.14 / 180) + centerY;
+			int x = r * cos(t * 3.14159265359 / 1.8E2) + centerX;
+			int y = r * sin(t * 3.14159265359 / 1.8E2) + centerY;
 			Uint32 color = r < radius - width ? fillColor : outlineColor;
 			DrawPixel(screen, x, y, color);
 			t++;

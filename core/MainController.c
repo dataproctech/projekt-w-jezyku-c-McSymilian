@@ -1,9 +1,11 @@
 #include "MainController.h"
+#include"../SDL2-2.0.10/include/SDL_video.h"
+//#include"../SDL2-2.0.10/include/SDL_image.h"
 
 int czarny;
-int zielony;
-int czerwony;
-int niebieski;
+//int zielony;
+//int czerwony;
+//int niebieski;
 
 void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* scrtex, SDL_Renderer* renderer) {
 	SDL_Event event;
@@ -122,10 +124,13 @@ int windowInit(
 	};
 	SDL_SetColorKey(*charset, true, 0x000000);
 
+	//SDL_Surface* loadedSurface = IMG_Load("./war_Caby.png");
+	//SDL_SetWindowIcon(*window, loadedSurface);
+
 	czarny = SDL_MapRGB((*screen)->format, 0x00, 0x00, 0x00);
-	zielony = SDL_MapRGB((*screen)->format, 0x00, 0xFF, 0x00);
-	czerwony = SDL_MapRGB((*screen)->format, 0xFF, 0x00, 0x00);
-	niebieski = SDL_MapRGB((*screen)->format, 0x11, 0x11, 0xCC);
+	//zielony = SDL_MapRGB((*screen)->format, 0x00, 0xFF, 0x00);
+	//czerwony = SDL_MapRGB((*screen)->format, 0xFF, 0x00, 0x00);
+	//niebieski = SDL_MapRGB((*screen)->format, 0x11, 0x11, 0xCC);
 
 	return 0;
 }
