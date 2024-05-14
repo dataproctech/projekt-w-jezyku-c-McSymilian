@@ -5,6 +5,9 @@
 #include <math.h>
 #include <stdbool.h>
 
+static int whitePawns = 12;
+static int blackPawns = 12;
+
 static bool isGameFinished = false;
 /*
  White player is true, black player is false.
@@ -16,6 +19,41 @@ static bool isKnockDownPossible = false;
 static bool isMultiKnockDownInProgress = false;
 static Pawn pawnToMove = { .row = -1, .column = -1, .isWhite = false, .isKing = false };
 
+static int checkForKingTransformation(int column, int row) {
+	if (isWhitesTurn && column == 7) {
+		return 2;
+	}
+	if (!isWhitesTurn && column == 0) {
+		return -2;
+	}
+	return isWhitesTurn ? 1 : -1;
+}
+
+static bool canNextPlayerMove(Board board) {
+	int currentPlayer = isWhitesTurn ? 1 : -1;
+	for (int row = 0; row < getBoardSize(); row++) {
+		for (int column = 0; column < getBoardSize(); column++) {
+			if (column + 1 < 8) {
+				if (row + 1 < 8 && board[column + 1][row + 1] == 0) {
+					return true;
+				}
+				if (row - 1 >= 0 && board[column + 1][row - 1] == 0) {
+					return true;
+				}
+			}
+			if (column - 1 >= 0 && abs(board[row][column]) == 2) {
+				if (row + 1 < 8 && board[column - 1][row + 1] == 0) {
+					return true;
+				}
+				if (row - 1 >= 0 && board[column - 1][row - 1] == 0) {
+					return true;
+				}
+			}
+
+		}
+	}
+	return false;
+}
 
 static void createLineOfKingsDestinations(
 	int columnStart,
@@ -261,23 +299,36 @@ void BoardClick(int x, int y) {
 		//knockdown
 		if (isKnockDownPossible) {
 			if (isKnockDown(selectedField.column, selectedField.row)) {
+				isWhitesTurn ? blackPawns-- : whitePawns--;
 				board[pawnToMove.column][pawnToMove.row] = 0;
 				board[selectedField.column][selectedField.row] = (isWhitesTurn ? 1 : -1) * (pawnToMove.isKing ? 2 : 1);
 				int knockedDownPawnRow = ((selectedField.row - pawnToMove.row) > 0 ? -1 : 1) + selectedField.row;
 				int knockedDownPawnColumn = ((selectedField.column - pawnToMove.column) > 0 ? -1 : 1) + selectedField.column;
 				board[knockedDownPawnColumn][knockedDownPawnRow] = 0;
+				//check for kings
+				if (!pawnToMove.isKing) {
+					board[selectedField.column][selectedField.row] = checkForKingTransformation(selectedField.column, selectedField.row);
+				}
 				upadatePawnsOnBoard(board);
 				clearSelected();
 				clearKnockDown();
 				if (!createKnockDowns(selectedField.column, selectedField.row, board, true)) {
+					if (isWhitesTurn ? blackPawns == 0 : whitePawns == 0) isGameFinished = true;
 					isWhitesTurn = !isWhitesTurn;
 					isKnockDownPossible = false;
 					isPawnSelected = false;
 					lookForKnockDowns();
+					if (!isKnockDownPossible) {
+						if (!canNextPlayerMove(board)) {
+							isGameFinished = true;
+							isWhitesTurn = !isWhitesTurn;
+						}
+					}
 				}
 				else {
 					pawnToMove.column = selectedField.column;
 					pawnToMove.row = selectedField.row;
+					pawnToMove.isKing = abs(board[selectedField.column][selectedField.row] == 2);
 					setSelected(selectedField.column, selectedField.row);
 				}
 			}
@@ -289,12 +340,25 @@ void BoardClick(int x, int y) {
 		} else {
 			if (isDestination(selectedField.column, selectedField.row)) {
 				board = MovePawn(&pawnToMove, &selectedField, board);
+				//check for kings
+				if (!pawnToMove.isKing) {
+					board[selectedField.column][selectedField.row] = checkForKingTransformation(selectedField.column, selectedField.row);
+				}
 				upadatePawnsOnBoard(board);
 				clearSelected();
 				clearDestination();
+				
 				isWhitesTurn = !isWhitesTurn;
 				isPawnSelected = false;
 				lookForKnockDowns();
+				//check if opp has any moves available
+				if (!isKnockDownPossible) {
+					if (!canNextPlayerMove(board)) {
+						isGameFinished = true;
+						isWhitesTurn = !isWhitesTurn;
+					}
+				}
+				
 			}
 			else {
 				clearDestination();
@@ -320,7 +384,7 @@ bool IsGameFinished() {
 * 1 if the white player wins.
 * -1 if the black player wins.
 * 
-* @return 1 if the white player wins, -1 if the black player wins, 0 if the game is not finished.
+* @return 1 if the white player wins, 0 if the black player wins, -1 if the game is not finished.
 */
 int GetWinner() {	
 	return IsGameFinished() ? isWhitesTurn : -1;
