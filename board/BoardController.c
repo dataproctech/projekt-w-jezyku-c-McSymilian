@@ -14,7 +14,7 @@ static bool isWhitesTurn = true;
 static bool isPawnSelected = false;
 static bool isKnockDownPossible = false;
 static bool isMultiKnockDownInProgress = false;
-static Pawn pawnToMove = { .row = -1, .column = -1, .isWhite = false, .isKing = false, .isDestination = false };
+static Pawn pawnToMove = { .row = -1, .column = -1, .isWhite = false, .isKing = false };
 
 
 static void createLineOfKingsDestinations(
@@ -94,6 +94,49 @@ static bool createKnockDowns(int column, int row, Board pawnsOnBoard, bool drawK
 	return knockDownFound;
 }
 
+static bool findKingsKnockDownInLine(
+	int columnStart,
+	int rowStart,
+	int columnDirection,
+	int rowDirection,
+	bool drawKnockDown,
+	Board pawnsOnBoard
+	) 
+{
+	int currentPlayer = isWhitesTurn ? 1 : -1;
+	int nextColumn = columnStart + columnDirection;
+	int nextRow = rowStart + rowDirection;
+	while (nextColumn < 8 && nextRow < 8 &&
+		nextColumn >= 0 && nextRow >= 0 &&
+		pawnsOnBoard[nextColumn][nextRow] == 0)
+	{
+		nextColumn += columnDirection;
+		nextRow += rowDirection;
+	}
+	if (nextColumn + columnDirection < 8 && nextRow + rowDirection < 8 &&
+			nextColumn + columnDirection >= 0 && nextRow + rowDirection >= 0 &&
+			pawnsOnBoard[nextColumn + columnDirection][nextRow + rowDirection] == 0)
+		{
+		if (nextColumn < 8 && nextRow < 8 && nextColumn >= 0 && nextRow >= 0 &&
+			(pawnsOnBoard[nextColumn][nextRow] == -currentPlayer || pawnsOnBoard[nextColumn][nextRow] == -2 * currentPlayer))
+			{
+			if (drawKnockDown) addKnockDown(nextColumn + columnDirection, nextRow + rowDirection);
+			return true;
+		}
+	}
+	return false;
+}
+
+static bool createKingsKnockDowns(int column, int row, Board pawnsOnBoard, bool drawKnockDown) {
+	int currentPlayer = isWhitesTurn ? 1 : -1;
+	bool knockDownFound = false;
+	if (findKingsKnockDownInLine(column, row, 1, 1, drawKnockDown, pawnsOnBoard)) knockDownFound = true;
+	if (findKingsKnockDownInLine(column, row, 1, -1, drawKnockDown, pawnsOnBoard)) knockDownFound = true;
+	if (findKingsKnockDownInLine(column, row, -1, 1, drawKnockDown, pawnsOnBoard)) knockDownFound = true;
+	if (findKingsKnockDownInLine(column, row, -1, -1, drawKnockDown, pawnsOnBoard)) knockDownFound = true;
+	return knockDownFound;
+}
+
 void lookForKnockDowns() {
 	int currentPlayer = isWhitesTurn ? 1 : -1;
 	Board pawnsOnBoard = getPawnsOnBoard();
@@ -109,6 +152,15 @@ void lookForKnockDowns() {
 					return;
 				}
 			}
+			if (pawnsOnBoard[i][j] == 2 * currentPlayer) {
+				currentPawn.column = i;
+				currentPawn.row = j;
+				currentPawn.isWhite = currentPlayer;
+				if (createKingsKnockDowns(i, j, pawnsOnBoard, false)) {
+					isKnockDownPossible = true;
+					return;
+				}
+			}
 		}
 	}
 }
@@ -120,7 +172,12 @@ void handlePawnSelection(Pawn selectedPawn) {
 		createDestinations(selectedPawn);
 	}
 	else {
-		createKnockDowns(selectedPawn.column, selectedPawn.row, getPawnsOnBoard(), true);
+		if (selectedPawn.isKing) {
+			createKingsKnockDowns(selectedPawn.column, selectedPawn.row, getPawnsOnBoard(), true);
+		}
+		else {
+			createKnockDowns(selectedPawn.column, selectedPawn.row, getPawnsOnBoard(), true);
+		}
 	}
 	isPawnSelected = true;
 	pawnToMove.row = selectedPawn.row;
@@ -205,8 +262,10 @@ void BoardClick(int x, int y) {
 		if (isKnockDownPossible) {
 			if (isKnockDown(selectedField.column, selectedField.row)) {
 				board[pawnToMove.column][pawnToMove.row] = 0;
-				board[selectedField.column][selectedField.row] = isWhitesTurn ? 1 : -1;
-				board[(pawnToMove.column + selectedField.column) / 2][(pawnToMove.row + selectedField.row) / 2] = 0;
+				board[selectedField.column][selectedField.row] = (isWhitesTurn ? 1 : -1) * (pawnToMove.isKing ? 2 : 1);
+				int knockedDownPawnRow = ((selectedField.row - pawnToMove.row) > 0 ? -1 : 1) + selectedField.row;
+				int knockedDownPawnColumn = ((selectedField.column - pawnToMove.column) > 0 ? -1 : 1) + selectedField.column;
+				board[knockedDownPawnColumn][knockedDownPawnRow] = 0;
 				upadatePawnsOnBoard(board);
 				clearSelected();
 				clearKnockDown();
