@@ -312,7 +312,12 @@ void BoardClick(int x, int y) {
 				upadatePawnsOnBoard(board);
 				clearSelected();
 				clearKnockDown();
-				if (!createKnockDowns(selectedField.column, selectedField.row, board, true)) {
+				if (
+					selectedField.isKing ? 
+					!createKnockDowns(selectedField.column, selectedField.row, board, true) 
+					:
+					!createKingsKnockDowns(selectedField.column, selectedField.row, board, true)
+					) {
 					if (isWhitesTurn ? blackPawns == 0 : whitePawns == 0) isGameFinished = true;
 					isWhitesTurn = !isWhitesTurn;
 					isKnockDownPossible = false;
