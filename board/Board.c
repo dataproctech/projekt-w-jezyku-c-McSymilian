@@ -99,7 +99,7 @@ void clearDestination() {
 		--destinationCount;
 	}
 }
-static bool isDestination(int x, int y) {
+bool isDestination(int x, int y) {
 	for (int i = 0; i <= destinationCount; i++) 
 		if (destinations[i].x == x && destinations[i].y == y) 
 			return true;
@@ -121,7 +121,7 @@ void clearKnockDown() {
 		--knockDownCount;
 	}
 }
-static bool isKnockDown(int x, int y) {
+bool isKnockDown(int x, int y) {
 	for (int i = 0; i <= knockDownCount; i++) 
 		if (knockDown[i].x == x && knockDown[i].y == y) 
 			return true;
