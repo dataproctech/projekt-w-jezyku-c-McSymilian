@@ -22,6 +22,7 @@ int getBoardSize() {
 static void init(GameState* gameState) {
 	gameState->currentPlayer = true;
 	gameState->pawnsOnBoard = (Board)malloc(BOARD_SIZE * sizeof(int*));
+	gameState->isKnockDownPossible = false;
 	bool addPawn = false;
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		gameState->pawnsOnBoard[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
@@ -97,6 +98,10 @@ bool getCurrentPlayer() {
 	return gameState.currentPlayer;
 }
 
+bool getIsKnockDownPossible() {
+	return gameState.isKnockDownPossible;
+}
+
 /*
 * Copy values from updatedPawnsOnBoard to pawnsOnBoard
 * 
@@ -108,4 +113,12 @@ void upadatePawnsOnBoard(Board updatedPawnsOnBoard) {
 			gameState.pawnsOnBoard[i][j] = updatedPawnsOnBoard[i][j];
 		}
 	}
+}
+
+void updateCurrentPlayer() {
+	gameState.currentPlayer = !gameState.currentPlayer;
+}
+
+void updateKnockDownPossible(bool isKnockDownPossible) {
+	gameState.isKnockDownPossible = isKnockDownPossible;
 }

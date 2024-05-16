@@ -3,6 +3,7 @@
 #include "../archive/GameStateIO.h"
 #include "../SDL2-2.0.10/include/SDL_mouse.h"
 #include "../core/MainController.h"
+#include "../board/BoardController.h"
 #include <stdbool.h>
 #include <string.h>
 
@@ -91,7 +92,8 @@ void SaveGame() {
 	writeGameState(
 		(GameState) {
 			.pawnsOnBoard = getPawnsOnBoard(),
-			.currentPlayer = getCurrentPlayer()
+			.currentPlayer = getCurrentPlayer(),
+			.isKnockDownPossible = getIsKnockDownPossible()
 		},
 		getBoardSize()
 	);
@@ -101,8 +103,9 @@ void ResumeGame() {
 
 	GameState gameState = readGameState();
 	if (gameState.pawnsOnBoard != NULL) {
+		setCurrentPlayer(gameState.currentPlayer);
 		getPawnsOnBoard();
-		
 		upadatePawnsOnBoard(gameState.pawnsOnBoard);
+		setIsKnockDownPossible(gameState.isKnockDownPossible);
 	}	
 }

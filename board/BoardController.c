@@ -228,18 +228,23 @@ void DrawBoardAndPawns(SDL_Surface* screen) {
 }
  
 static int getColumn(int x) {
-	if (x < BOARD_START_X + PADDING || x > BOARD_START_X + BOARD_DRAW_SIZE - PADDING) {
+	int column = (x - BOARD_START_X - PADDING) / SQUARE_SIZE;
+	if (column >= 0 && column < 8) {
+		return column;
+	}
+	else {
 		return -1;
 	}
-	return (x - BOARD_START_X - PADDING) / SQUARE_SIZE;
 }
 
 static int getRow(int y) {
-	if (y < BOARD_START_Y + PADDING || y > BOARD_START_Y + BOARD_DRAW_SIZE - PADDING) {
+	int row = (y - BOARD_START_Y - PADDING) / SQUARE_SIZE;
+	if ( row >= 0 && row < 8) {
+		return row;
+	}
+	else {
 		return -1;
 	}
-
-	return (y - BOARD_START_Y - PADDING) / SQUARE_SIZE;
 }
 
 typedef struct Cooordinates {
@@ -308,6 +313,9 @@ void BoardClick(int x, int y) {
 				//check for kings
 				if (!pawnToMove.isKing) {
 					board[selectedField.column][selectedField.row] = checkForKingTransformation(selectedField.column, selectedField.row);
+					if (board[selectedField.column][selectedField.row] == 2 || board[selectedField.column][selectedField.row] == -2) {
+						pawnToMove.isKing = true;
+					}
 				}
 				upadatePawnsOnBoard(board);
 				clearSelected();
@@ -320,20 +328,22 @@ void BoardClick(int x, int y) {
 					) {
 					if (isWhitesTurn ? blackPawns == 0 : whitePawns == 0) isGameFinished = true;
 					isWhitesTurn = !isWhitesTurn;
+					updateCurrentPlayer();
 					isKnockDownPossible = false;
 					isPawnSelected = false;
 					lookForKnockDowns();
+					updateKnockDownPossible(isKnockDownPossible);
 					if (!isKnockDownPossible) {
 						if (!canNextPlayerMove(board)) {
 							isGameFinished = true;
 							isWhitesTurn = !isWhitesTurn;
+							updateCurrentPlayer();
 						}
 					}
 				}
 				else {
 					pawnToMove.column = selectedField.column;
 					pawnToMove.row = selectedField.row;
-					pawnToMove.isKing = abs(board[selectedField.column][selectedField.row] == 2);
 					setSelected(selectedField.column, selectedField.row);
 				}
 			}
@@ -352,21 +362,24 @@ void BoardClick(int x, int y) {
 				upadatePawnsOnBoard(board);
 				clearSelected();
 				clearDestination();
-				
 				isWhitesTurn = !isWhitesTurn;
+				updateCurrentPlayer();
 				isPawnSelected = false;
 				lookForKnockDowns();
-				//check if opp has any moves available
+				updateKnockDownPossible(isKnockDownPossible);
+				//check if opp has any moves available, if not - game is finished
 				if (!isKnockDownPossible) {
 					if (!canNextPlayerMove(board)) {
 						isGameFinished = true;
 						isWhitesTurn = !isWhitesTurn;
+						updateCurrentPlayer();
 					}
 				}
 				
 			}
 			else {
 				clearDestination();
+				clearSelected();
 				isPawnSelected = false;
 			}
 		}
@@ -401,4 +414,8 @@ bool  getControllCurrentPlayer() {
 
 void setCurrentPlayer(bool currentPlayer) {
 	isWhitesTurn = currentPlayer;
+}
+
+void setIsKnockDownPossible(bool wasKnockDownPossible) {
+	isKnockDownPossible = wasKnockDownPossible;
 }
