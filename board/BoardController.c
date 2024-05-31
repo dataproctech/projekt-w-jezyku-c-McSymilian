@@ -16,7 +16,6 @@ White player starts the game.
 static bool isWhitesTurn = true;
 static bool isPawnSelected = false;
 static bool isKnockDownPossible = false;
-static bool isMultiKnockDownInProgress = false;
 static Pawn pawnToMove = { .row = -1, .column = -1, .isWhite = false, .isKing = false };
 
 static int checkForKingTransformation(int column, int row) {
@@ -275,10 +274,7 @@ static Pawn getPawn(Cooordinates coordinates, Board board) {
 void BoardClick(int x, int y) {
 	if (IsGameFinished()) 
 		return;
-
-	if (board == NULL) 
-		board = getPawnsOnBoard();
-	
+	board = getPawnsOnBoard();
 	Cooordinates selectedCoords = (Cooordinates){ .row = getRow(y), .column = getColumn(x) };
 
 	if (selectedCoords.row == -1 || selectedCoords.column == -1) 
@@ -418,4 +414,8 @@ void setCurrentPlayer(bool currentPlayer) {
 
 void setIsKnockDownPossible(bool wasKnockDownPossible) {
 	isKnockDownPossible = wasKnockDownPossible;
+}
+
+void setIsPawnSelected(bool isSelected) {
+	isPawnSelected = isSelected;
 }

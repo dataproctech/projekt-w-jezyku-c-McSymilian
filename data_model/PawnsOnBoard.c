@@ -44,7 +44,7 @@ static void init(GameState* gameState) {
 
 
 static Board copy(Board boardSource) {
-	Board copy = (Board)malloc(BOARD_SIZE * sizeof(int*)); 
+	Board copy = (Board)malloc(BOARD_SIZE * BOARD_SIZE * sizeof(int*)); 
 
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		copy[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
@@ -57,26 +57,7 @@ static Board copy(Board boardSource) {
 }
 
 void resetPawns() {
-	if (gameState.pawnsOnBoard == 0)
-		init(&gameState);
-	else {
-		bool addPawn = false;
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			for (int j = 0; j < BOARD_SIZE; j++) {
-				if ((i == 0 || i == 1 || i == 2) && addPawn) {
-					gameState.pawnsOnBoard[i][j] = 1;
-				}
-				else if ((i == 5 || i == 6 || i == 7) && addPawn) {
-					gameState.pawnsOnBoard[i][j] = -1;
-				}
-				else {
-					gameState.pawnsOnBoard[i][j] = 0;
-				}
-				addPawn = !addPawn;
-			}
-			addPawn = !addPawn;
-		}
-	}
+	init(&gameState);
 }
 
 /*

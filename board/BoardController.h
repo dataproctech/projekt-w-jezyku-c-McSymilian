@@ -15,3 +15,5 @@ bool getControllCurrentPlayer();
 void setCurrentPlayer(bool currentPlayer);
 
 void setIsKnockDownPossible(bool isKnockDownPossible);
+
+void setIsPawnSelected(bool isPawnSelected);

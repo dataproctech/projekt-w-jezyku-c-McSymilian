@@ -4,6 +4,7 @@
 #include "../SDL2-2.0.10/include/SDL_mouse.h"
 #include "../core/MainController.h"
 #include "../board/BoardController.h"
+#include "../board/Board.h"
 #include <stdbool.h>
 #include <string.h>
 
@@ -86,6 +87,12 @@ int MenuClick(int x, int y)
 
 void NewGame() {
 	resetPawns();
+	setCurrentPlayer(true);
+	setIsKnockDownPossible(false);
+	clearDestination();
+	clearKnockDown();
+	clearSelected();
+	setIsPawnSelected(false);
 }
 
 void SaveGame() {
@@ -107,5 +114,9 @@ void ResumeGame() {
 		getPawnsOnBoard();
 		upadatePawnsOnBoard(gameState.pawnsOnBoard);
 		setIsKnockDownPossible(gameState.isKnockDownPossible);
+		clearDestination();
+		clearKnockDown();
+		clearSelected();
+		setIsPawnSelected(false);
 	}	
 }
