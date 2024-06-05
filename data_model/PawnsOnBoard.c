@@ -1,12 +1,8 @@
 #include "PawnsOnBoard.h"
 #include <stdlib.h>
 #include <stdbool.h>
+#include"../SDL2-2.0.10/include/SDL_mouse.h"
 
-
-struct GameState {
-	Board pawnsOnBoard;
-	bool currentPlayer;
-};
 /*
 * PLAYER A: 
 *	PAWN: 1
@@ -26,18 +22,19 @@ int getBoardSize() {
 static void init(GameState* gameState) {
 	gameState->currentPlayer = true;
 	gameState->pawnsOnBoard = (Board)malloc(BOARD_SIZE * sizeof(int*));
+	gameState->isKnockDownPossible = false;
 	bool addPawn = false;
 	for (int i = 0; i < BOARD_SIZE; i++) {
-		(gameState->pawnsOnBoard)[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
+		gameState->pawnsOnBoard[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			if ((i == 0 || i == 1 || i == 2) && addPawn) {
-				(gameState->pawnsOnBoard)[i][j] = 1;
+				gameState->pawnsOnBoard[i][j] = 1;
 			}
 			else if ((i == 5 || i == 6 || i == 7) && addPawn) {
-				(gameState->pawnsOnBoard)[i][j] = -1;
+				gameState->pawnsOnBoard[i][j] = -1;
 			}
 			else {
-				(gameState->pawnsOnBoard)[i][j] = 0;
+				gameState->pawnsOnBoard[i][j] = 0;
 			}
 			addPawn = !addPawn;
 		}
@@ -47,7 +44,7 @@ static void init(GameState* gameState) {
 
 
 static Board copy(Board boardSource) {
-	Board copy = (Board)malloc(BOARD_SIZE * sizeof(int*)); 
+	Board copy = (Board)malloc(BOARD_SIZE * BOARD_SIZE * sizeof(int*)); 
 
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		copy[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
@@ -60,26 +57,7 @@ static Board copy(Board boardSource) {
 }
 
 void resetPawns() {
-	if (gameState.pawnsOnBoard == 0)
-		init(&gameState.pawnsOnBoard);
-	else {
-		bool addPawn = false;
-		for (int i = 0; i < BOARD_SIZE; i++) {
-			for (int j = 0; j < BOARD_SIZE; j++) {
-				if ((i == 0 || i == 1 || i == 2) && addPawn) {
-					gameState.pawnsOnBoard[i][j] = 1;
-				}
-				else if ((i == 5 || i == 6 || i == 7) && addPawn) {
-					gameState.pawnsOnBoard[i][j] = -1;
-				}
-				else {
-					gameState.pawnsOnBoard[i][j] = 0;
-				}
-				addPawn = !addPawn;
-			}
-			addPawn = !addPawn;
-		}
-	}
+	init(&gameState);
 }
 
 /*
@@ -101,6 +79,10 @@ bool getCurrentPlayer() {
 	return gameState.currentPlayer;
 }
 
+bool getIsKnockDownPossible() {
+	return gameState.isKnockDownPossible;
+}
+
 /*
 * Copy values from updatedPawnsOnBoard to pawnsOnBoard
 * 
@@ -112,4 +94,12 @@ void upadatePawnsOnBoard(Board updatedPawnsOnBoard) {
 			gameState.pawnsOnBoard[i][j] = updatedPawnsOnBoard[i][j];
 		}
 	}
+}
+
+void updateCurrentPlayer() {
+	gameState.currentPlayer = !gameState.currentPlayer;
+}
+
+void updateKnockDownPossible(bool isKnockDownPossible) {
+	gameState.isKnockDownPossible = isKnockDownPossible;
 }

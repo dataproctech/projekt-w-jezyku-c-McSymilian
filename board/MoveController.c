@@ -2,7 +2,9 @@
 #include "Board.h"
 #include <math.h>
 
-static Pawn selectedPawn = { .row = -1, .column = -1, .isWhite = false, .isKing = false, .isDestination = false };
+static Pawn selectedPawn = { .row = -1, .column = -1, .isWhite = false, .isKing = false, };
+static Pawn pawnToMove = { .row = -1, .column = -1, .isWhite = false, .isKing = false, };
+
 
 Pawn getSelectedPawn()
 {	
@@ -13,7 +15,6 @@ void setSelectedPawn(Pawn* pawn, Board board)
 {
 	selectedPawn.column = pawn->column;
 	selectedPawn.row = pawn->row;
-	selectedPawn.isDestination = pawn->isDestination;
 	selectedPawn.isKing = pawn->isKing;
 	selectedPawn.isWhite = pawn->isWhite;
 	
@@ -217,12 +218,14 @@ bool hasKnockDown(Pawn pawn, Board board) {
 	return false;
 }
 
+
 void EndMove()
 {
 	selectedPawn = *defaultPawn();
 	clearDestination();
 	clearKnockDown();
 }
+
 
 static bool kockDownExists(Board board, bool whiteTurn)
 {
