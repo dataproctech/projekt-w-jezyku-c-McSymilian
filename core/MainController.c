@@ -16,10 +16,13 @@ static void startGame(SDL_Surface* screen, SDL_Surface* charset, SDL_Texture* sc
 	while (!quit) {
 		SDL_FillRect(screen, NULL, czarny);
 
-		if (isMenuTop)
+		if (isMenuTop) {
 			DrawMenu(screen, charset);
-		else
+		}
+		else {
 			DrawBoardAndPawns(screen);
+			if (IsGameFinished()) DrawResult(screen, charset, GetWinner());
+		}
 
 		SDL_UpdateTexture(scrtex, NULL, screen->pixels, screen->pitch);
 		//		SDL_RenderClear(renderer);

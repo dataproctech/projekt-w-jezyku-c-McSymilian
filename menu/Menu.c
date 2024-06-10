@@ -93,6 +93,7 @@ void NewGame() {
 	clearKnockDown();
 	clearSelected();
 	setIsPawnSelected(false);
+	setIsGameFinished(false);
 }
 
 void SaveGame() {
@@ -118,5 +119,6 @@ void ResumeGame() {
 		clearKnockDown();
 		clearSelected();
 		setIsPawnSelected(false);
+		setIsGameFinished(false);
 	}	
 }
