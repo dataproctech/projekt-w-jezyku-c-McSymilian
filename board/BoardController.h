@@ -17,3 +17,7 @@ void setCurrentPlayer(bool currentPlayer);
 void setIsKnockDownPossible(bool isKnockDownPossible);
 
 void setIsPawnSelected(bool isPawnSelected);
+
+void setIsGameFinished(bool isGameFinished);
+
+bool arePawnsOnBoard();

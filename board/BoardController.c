@@ -5,9 +5,6 @@
 #include <math.h>
 #include <stdbool.h>
 
-static int whitePawns = 12;
-static int blackPawns = 12;
-
 static bool isGameFinished = false;
 /*
  White player is true, black player is false.
@@ -17,6 +14,12 @@ static bool isWhitesTurn = true;
 static bool isPawnSelected = false;
 static bool isKnockDownPossible = false;
 static Pawn pawnToMove = { .row = -1, .column = -1, .isWhite = false, .isKing = false };
+typedef struct Cooordinates {
+	int row;
+	int column;
+} Cooordinates;
+
+static Board board;
 
 static int checkForKingTransformation(int column, int row) {
 	if (isWhitesTurn && column == 7) {
@@ -28,27 +31,28 @@ static int checkForKingTransformation(int column, int row) {
 	return isWhitesTurn ? 1 : -1;
 }
 
-static bool canNextPlayerMove(Board board) {
-	int currentPlayer = isWhitesTurn ? 1 : -1;
+static bool canNextPlayerMove() {
+	int direction = isWhitesTurn ? 1 : -1;
 	for (int row = 0; row < getBoardSize(); row++) {
 		for (int column = 0; column < getBoardSize(); column++) {
-			if (column + 1 < 8) {
-				if (row + 1 < 8 && board[column + 1][row + 1] == 0) {
-					return true;
+			if (board[column][row] == direction || board[column][row] == 2 * direction) {
+				if (column + direction < 8 && column - direction >= 0) {
+					if (row + 1 < 8 && board[column + direction][row + 1] == 0) {
+						return true;
+					}
+					if (row - 1 >= 0 && board[column + direction][row - 1] == 0) {
+						return true;
+					}
 				}
-				if (row - 1 >= 0 && board[column + 1][row - 1] == 0) {
-					return true;
+				if (column - 1 >= 0 && board[row][column] == direction * 2) {
+					if (row + 1 < 8 && board[column - direction][row + 1] == 0) {
+						return true;
+					}
+					if (row - 1 >= 0 && board[column - direction][row - 1] == 0) {
+						return true;
+					}
 				}
 			}
-			if (column - 1 >= 0 && abs(board[row][column]) == 2) {
-				if (row + 1 < 8 && board[column - 1][row + 1] == 0) {
-					return true;
-				}
-				if (row - 1 >= 0 && board[column - 1][row - 1] == 0) {
-					return true;
-				}
-			}
-
 		}
 	}
 	return false;
@@ -246,13 +250,6 @@ static int getRow(int y) {
 	}
 }
 
-typedef struct Cooordinates {
-	int row;
-	int column;
-} Cooordinates;
-
-static Board board;
-
 static Pawn getPawn(Cooordinates coordinates, Board board) {
 	int val = board[coordinates.column][coordinates.row];
 	return (Pawn) { 
@@ -300,7 +297,6 @@ void BoardClick(int x, int y) {
 		//knockdown
 		if (isKnockDownPossible) {
 			if (isKnockDown(selectedField.column, selectedField.row)) {
-				isWhitesTurn ? blackPawns-- : whitePawns--;
 				board[pawnToMove.column][pawnToMove.row] = 0;
 				board[selectedField.column][selectedField.row] = (isWhitesTurn ? 1 : -1) * (pawnToMove.isKing ? 2 : 1);
 				int knockedDownPawnRow = ((selectedField.row - pawnToMove.row) > 0 ? -1 : 1) + selectedField.row;
@@ -322,7 +318,6 @@ void BoardClick(int x, int y) {
 					:
 					!createKnockDowns(selectedField.column, selectedField.row, board, true)
 					) {
-					if (isWhitesTurn ? blackPawns == 0 : whitePawns == 0) isGameFinished = true;
 					isWhitesTurn = !isWhitesTurn;
 					updateCurrentPlayer();
 					isKnockDownPossible = false;
@@ -330,7 +325,7 @@ void BoardClick(int x, int y) {
 					lookForKnockDowns();
 					updateKnockDownPossible(isKnockDownPossible);
 					if (!isKnockDownPossible) {
-						if (!canNextPlayerMove(board)) {
+						if (!canNextPlayerMove()) {
 							isGameFinished = true;
 							isWhitesTurn = !isWhitesTurn;
 							updateCurrentPlayer();
@@ -348,6 +343,7 @@ void BoardClick(int x, int y) {
 				clearSelected();
 				isPawnSelected = false;
 			}
+		//move
 		} else {
 			if (isDestination(selectedField.column, selectedField.row)) {
 				board = MovePawn(&pawnToMove, &selectedField, board);
@@ -365,7 +361,7 @@ void BoardClick(int x, int y) {
 				updateKnockDownPossible(isKnockDownPossible);
 				//check if opp has any moves available, if not - game is finished
 				if (!isKnockDownPossible) {
-					if (!canNextPlayerMove(board)) {
+					if (!canNextPlayerMove() && arePawnsOnBoard()) {
 						isGameFinished = true;
 						isWhitesTurn = !isWhitesTurn;
 						updateCurrentPlayer();
@@ -391,6 +387,9 @@ void BoardClick(int x, int y) {
 bool IsGameFinished() {
 	return isGameFinished;
 }
+void setIsGameFinished(bool isFinished) {
+	isGameFinished = isFinished;
+}
 
 /*
 * Returns the winner of the game.
@@ -404,7 +403,7 @@ int GetWinner() {
 	return IsGameFinished() ? isWhitesTurn : -1;
 }
 
-bool  getControllCurrentPlayer() {
+bool getControllCurrentPlayer() {
 	return isWhitesTurn;
 }
 
@@ -418,4 +417,15 @@ void setIsKnockDownPossible(bool wasKnockDownPossible) {
 
 void setIsPawnSelected(bool isSelected) {
 	isPawnSelected = isSelected;
+}
+
+bool arePawnsOnBoard() {
+	for (int i = 0; i < getBoardSize(); i++) {
+		for (int j = 0; j < getBoardSize(); j++) {
+			if (board[i][j] != 0) {
+				return true;
+			}
+		}
+	}
+	return false;
 }

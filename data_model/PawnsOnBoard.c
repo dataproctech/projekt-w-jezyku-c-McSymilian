@@ -45,14 +45,12 @@ static void init(GameState* gameState) {
 
 static Board copy(Board boardSource) {
 	Board copy = (Board)malloc(BOARD_SIZE * BOARD_SIZE * sizeof(int*)); 
-
 	for (int i = 0; i < BOARD_SIZE; i++) {
 		copy[i] = (int*)malloc(BOARD_SIZE * sizeof(int));
 		for (int j = 0; j < BOARD_SIZE; j++) {
 			copy[i][j] = boardSource[i][j];
 		}
 	}
-
 	return copy;
 }
 
@@ -103,3 +101,4 @@ void updateCurrentPlayer() {
 void updateKnockDownPossible(bool isKnockDownPossible) {
 	gameState.isKnockDownPossible = isKnockDownPossible;
 }
+
