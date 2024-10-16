@@ -1,0 +1,7 @@
+﻿  main.c
+D:\Projects\c-workspace\war_Caby\main.c(192,36): warning C4267: "funkcja": konwersja z "size_t" do "int", możliwa utrata danych
+D:\Projects\c-workspace\war_Caby\main.c(195,36): warning C4267: "funkcja": konwersja z "size_t" do "int", możliwa utrata danych
+D:\Projects\c-workspace\war_Caby\main.c(191,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Projects\c-workspace\war_Caby\main.c(194,3): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Projects\c-workspace\war_Caby\main.c(87,15): warning C4101: "eti": lokalna zmienna, do której nie istnieje odwołanie
+  szablon2vs19.vcxproj -> D:\Projects\c-workspace\war_Caby\x64\Debug\szablon2vs19.exe
